@@ -76,7 +76,12 @@ const GetLocationModal = (props) => {
           }}></View> : ""}
 
           {/* Current Location Button */}
-          {show ? <TouchableOpacity style={{
+          {show ? <TouchableOpacity onPress={
+            ()=>{
+              props.fetchLocation();
+              props.setModalVisible();
+            }
+          } style={{
             alignSelf: "center",
             alignItems: "center",
             backgroundColor: "#146356",
