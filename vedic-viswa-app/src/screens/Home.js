@@ -7,7 +7,8 @@ import Header from '../components/Header';
 import Searchbox from '../components/Searchbox';
 import GetLocationModal from '../components/GetLocationModal';
 import { useSelector, useDispatch } from 'react-redux';
-import GetLocation from 'react-native-get-location'
+import GetLocation from 'react-native-get-location';
+import DropdownComponent from '../components/DropdownComponent';
 
 const Home = () => {
   
@@ -71,6 +72,9 @@ const Home = () => {
           image={carouselImages}
           component={<Preview />}
           width={300}></Carousel>
+
+           {/* Filter Hospitals */}
+           <DropdownComponent></DropdownComponent>
         <View style={[styles.card_group, { paddingBottom: 150 }]}>
           <Card_Group location={location}/>
         </View>
@@ -81,6 +85,9 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  home:{
+    backgroundColor:"#ffffff"
+  },
   card_group: {
     alignItems: 'center',
   },
