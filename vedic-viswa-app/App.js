@@ -10,12 +10,14 @@ import UpcomingAppointment from './src/components/UpcomingAppointment';
 import AvailableSlot from './src/screens/AvailableSlot';
 import store from './src/redux/store';
 import { Provider } from 'react-redux';
+import LeftDrawer from './src/components/LeftDrawer';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <Provider store={store}>
+      <LeftDrawer>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -50,6 +52,7 @@ const App = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </LeftDrawer>
     </Provider>
   );
 };

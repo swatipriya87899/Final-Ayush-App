@@ -1,5 +1,8 @@
+import { openDrawer } from "../action";
+
 const initialState = {
-    nearByHospital:[]
+    nearByHospital:[],
+    openDrawer:false
   };
 
 
@@ -9,6 +12,11 @@ const initialState = {
           return {
             ...state,
             nearByHospital: action.payload
+          } 
+          case "OPEN_DRAWER":
+          return {
+            ...state,
+            openDrawer: action.payload
           } 
         default:
             return state;
