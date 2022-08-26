@@ -1,22 +1,52 @@
- import React, { useState } from 'react';
-  import { StyleSheet, Text, View } from 'react-native';
-  import { Dropdown } from 'react-native-element-dropdown';
-  import AntDesign from 'react-native-vector-icons/AntDesign';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import config from './../../config';
+import { useDispatch } from 'react-redux';
+import { getNearbyHospitals } from '../redux/action';
 
-  const data = [
-    { label: 'Ayurveda', value: '1' },
-    { label: 'Yoga', value: '2' },
-    { label: 'Naturopathy', value: '3' },
-    { label: 'Unani', value: '4' },
-    { label: 'Siddha', value: '5' },
-    { label: 'Homeopathy', value: '6' }
-  ];
+const data = [
+  { label: 'Ayurveda', value: 'Ayurveda' },
+  { label: 'Yoga', value: 'Yoga' },
+  { label: 'Naturopathy', value: 'Naturopathy' },
+  { label: 'Unani', value: 'Unani' },
+  { label: 'Siddha', value: 'Siddha' },
+  { label: 'Homeopathy', value: 'Homeopathy' }
+];
 
-  const DropdownComponent = () => {
-    const [value, setValue] = useState(null);
-    const [isFocus, setIsFocus] = useState(false);
+const DropdownComponent = (props) => {
 
-    return (
+  const dispatch = useDispatch();
+
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  useEffect(() => {
+    if (value) {
+      fetch(`${config.Base_API_URL}/hospital/getNearbyHospitalsWithFilter`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          latitude: props.location.latitude,
+          longitude: props.location.longitude,
+          radius: 3000,
+          mode: "D",
+          query: value.toLowerCase()
+        })
+      }).then(response => response.json()).then(
+        (data) => {
+          dispatch(getNearbyHospitals(data))
+        }
+      )
+    }
+  }, [value])
+
+  return (
+    <View style={{ alignItems: "center" }}>
       <View style={styles.container}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: '#064635' }]}
@@ -37,35 +67,37 @@
           }}
         />
       </View>
-    );
-  };
+    </View>
+  );
+};
 
-  export default DropdownComponent;
+export default DropdownComponent;
 
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: 'white',
-      padding: 16,
-    },
-    dropdown: {
-      height: 50,
-      borderColor: 'gray',
-      borderWidth: 0.5,
-      borderRadius: 8,
-      paddingHorizontal: 8,
-    },
-    placeholderStyle: {
-      fontSize: 16,
-    },
-    selectedTextStyle: {
-      fontSize: 16,
-    },
-    iconStyle: {
-      width: 20,
-      height: 20,
-    },
-    inputSearchStyle: {
-      height: 40,
-      fontSize: 16,
-    },
-  });
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    padding: 16,
+    width: "90%",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});

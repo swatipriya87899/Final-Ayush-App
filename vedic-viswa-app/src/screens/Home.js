@@ -75,7 +75,7 @@ const Home = () => {
           width={300}></Carousel>
 
            {/* Filter Hospitals */}
-           <DropdownComponent></DropdownComponent>
+           <DropdownComponent location={location}></DropdownComponent>
         <View style={[styles.card_group, { paddingBottom: 150 }]}>
           <Card_Group location={location}/>
         </View>
