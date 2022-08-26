@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import Searchbox from '../components/Searchbox';
 import GetLocationModal from '../components/GetLocationModal';
 import { useSelector, useDispatch } from 'react-redux';
-import GetLocation from 'react-native-get-location'
+import GetLocation from 'react-native-get-location';
 
 const Home = () => {
   
@@ -61,11 +61,11 @@ const Home = () => {
   ];
   
   return (
-    <View style={styles.home}>
+      <View style={styles.home}>
       <Header location={location} changeLocation={changeLocationHandler}></Header>
       <ScrollView>
         <View style={styles.margin}>
-          <Searchbox></Searchbox>
+          <Searchbox location={location}></Searchbox>
         </View>
         <Carousel
           image={carouselImages}
